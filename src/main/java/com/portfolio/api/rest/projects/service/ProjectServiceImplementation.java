@@ -4,6 +4,7 @@ import com.portfolio.api.rest.projects.dao.ProjectDAO;
 import com.portfolio.api.rest.projects.dto.ProjectDTO;
 import com.portfolio.api.rest.projects.entity.Projects;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class ProjectServiceImplementation implements ProjectService {
     private ProjectDAO projectDAO;
 
+    @Autowired
     public void setProjectDAO(ProjectDAO projectDAO) {
         this.projectDAO = projectDAO;
     }

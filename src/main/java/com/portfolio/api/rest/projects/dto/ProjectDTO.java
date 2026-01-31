@@ -1,6 +1,8 @@
 package com.portfolio.api.rest.projects.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.io.File;
 import java.util.List;
@@ -18,8 +20,10 @@ public class ProjectDTO {
     @NotBlank(message = "Live link")
     private String liveLink;
 
-    @NotBlank(message = "Technologies used")
-    private List<String> techUsed;
+    @NotEmpty(message = "techUsed cannot be empty - provide at least one technology")
+    @Size(max = 15, message = "Maximum 15 technologies allowed")
+    private List<@NotBlank(message = "Each technology must not be blank") @Size(max = 50, message = "Technology name too long") String> techUsed;
+
 
     private String thumbnail;
 
@@ -57,11 +61,11 @@ public class ProjectDTO {
         this.liveLink = liveLink;
     }
 
-    public @NotBlank(message = "Technologies used") List<String> getTechUsed() {
+    public @NotEmpty(message = "techUsed cannot be empty - provide at least one technology") @Size(max = 15, message = "Maximum 15 technologies allowed") List<@NotBlank(message = "Each technology must not be blank") @Size(max = 50, message = "Technology name too long") String> getTechUsed() {
         return techUsed;
     }
 
-    public void setTechUsed(@NotBlank(message = "Technologies used") List<String> techUsed) {
+    public void setTechUsed(@NotEmpty(message = "techUsed cannot be empty - provide at least one technology") @Size(max = 15, message = "Maximum 15 technologies allowed") List<@NotBlank(message = "Each technology must not be blank") @Size(max = 50, message = "Technology name too long") String> techUsed) {
         this.techUsed = techUsed;
     }
 

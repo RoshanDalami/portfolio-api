@@ -25,7 +25,12 @@ public class Projects {
     @Column(name = "live_link")
     private String liveLink;
 
-    @Column(name = "tech_used")
+    @ElementCollection
+    @CollectionTable(
+            name = "project_technologies",
+            joinColumns = @JoinColumn(name = "project_id")
+    )
+    @Column(name = "technologies")
     private List<String> techUsed;
 
     @Column(name = "thumbnail")
@@ -98,18 +103,5 @@ public class Projects {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
-    }
-
-    @Override
-    public String toString() {
-        return "Projects{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", githubLink='" + githubLink + '\'' +
-                ", liveLink='" + liveLink + '\'' +
-                ", techUsed=" + techUsed +
-                ", thumbnail='" + thumbnail + '\'' +
-                '}';
     }
 }

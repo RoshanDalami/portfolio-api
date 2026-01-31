@@ -30,7 +30,7 @@ public class ExperienceRestController {
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "Experience fetched successfully", experiences));
     }
 
-    @PostMapping(value = "", consumes = "application/json")
+    @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<Object>> save(@Valid @RequestBody ExperienceDTO experienceDTO){
         Experience experience = experienceService.save(experienceDTO);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.CREATED.value(), "Experience created successfully", null));

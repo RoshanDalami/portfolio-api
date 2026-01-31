@@ -6,6 +6,8 @@ import com.portfolio.api.rest.projects.service.ProjectService;
 import com.portfolio.api.utils.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Objects;
 
+
 @RestController
 @RequestMapping("/api/v1/projects")
 @Tag(name = "Projects", description = "Endpoints for Projects Section")
 public class ProjectsRestController {
     private ProjectService projectService;
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(ProjectsRestController.class);
     public ProjectsRestController(ProjectService projectService) {
         this.projectService = projectService;
     }
@@ -31,7 +36,8 @@ public class ProjectsRestController {
     }
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ApiResponse<Objects>> save(@Valid @RequestBody ProjectDTO projectDTO){
+    public ResponseEntity<ApiResponse<Objects>> save(@Valid @ModelAttribute ProjectDTO projectDTO){
+        logger.atInfo().log(projectDTO.toString(),"project Dto");
         Projects projects = projectService.save(projectDTO);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.CREATED.value(), "Project created successfully", null));
     }
