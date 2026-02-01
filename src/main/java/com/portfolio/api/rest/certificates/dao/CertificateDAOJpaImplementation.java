@@ -43,6 +43,7 @@ public class CertificateDAOJpaImplementation implements CertificateDAO {
         newCertificate.setInstitution(certificateDTO.getInstitution());
         newCertificate.setTitle(certificateDTO.getTitle());
         newCertificate.setSkills(certificateDTO.getSkills());
+        newCertificate.setImageUrl(certificateDTO.getImageUrl());
         entityManager.persist(newCertificate);
     }
 

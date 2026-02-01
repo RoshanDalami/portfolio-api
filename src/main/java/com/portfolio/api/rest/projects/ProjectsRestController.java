@@ -1,5 +1,6 @@
 package com.portfolio.api.rest.projects;
 
+import com.portfolio.api.filestorage.FileStorageService;
 import com.portfolio.api.rest.projects.dto.ProjectDTO;
 import com.portfolio.api.rest.projects.entity.Projects;
 import com.portfolio.api.rest.projects.service.ProjectService;
@@ -22,11 +23,12 @@ import java.util.Objects;
 @Tag(name = "Projects", description = "Endpoints for Projects Section")
 public class ProjectsRestController {
     private ProjectService projectService;
-
+private FileStorageService fileStorageService;
     private static final Logger logger =
             LoggerFactory.getLogger(ProjectsRestController.class);
-    public ProjectsRestController(ProjectService projectService) {
+    public ProjectsRestController(ProjectService projectService, FileStorageService fileStorageService) {
         this.projectService = projectService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("")
@@ -38,6 +40,8 @@ public class ProjectsRestController {
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Objects>> save(@Valid @ModelAttribute ProjectDTO projectDTO){
         logger.atInfo().log(projectDTO.toString(),"project Dto");
+        String imageUrl = this.fileStorageService.storeFile(projectDTO.getThumbnailFile(),"projects");
+        projectDTO.setThumbnail(imageUrl);
         Projects projects = projectService.save(projectDTO);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.CREATED.value(), "Project created successfully", null));
     }

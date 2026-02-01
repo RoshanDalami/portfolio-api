@@ -3,6 +3,7 @@ package com.portfolio.api.rest.certificates.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,6 +24,11 @@ public class CertificateDTO {
     @NotEmpty(message = "Skilled Gained")
     @Size(min = 1, message = "At least one skill is required")
     private List<@NotBlank(message = "Skill is required") String> skills;
+
+    private MultipartFile certificateFile;
+
+    private String imageUrl;
+
 
     public @NotBlank(message = "Certificate URL is required") String getCertificateUrl() {
         return certificateUrl;
@@ -62,5 +68,19 @@ public class CertificateDTO {
 
     public void setSkills(@NotEmpty(message = "Skilled Gained") @Size(min = 1, message = "At least one skill is required") List<@NotBlank(message = "Skill is required") String> skills) {
         this.skills = skills;
+    }
+
+    public MultipartFile getCertificateFile() {
+        return certificateFile;
+    }
+
+    public void setCertificateFile(MultipartFile certificateFile) {
+        this.certificateFile = certificateFile;
+    }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

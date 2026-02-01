@@ -3,6 +3,7 @@ package com.portfolio.api.rest.projects.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ProjectDTO {
 
     private String thumbnail;
 
-    private File thumbnailFile;
+    private MultipartFile thumbnailFile;
 
     public @NotBlank(message = "Title is required") String getTitle() {
         return title;
@@ -77,11 +78,11 @@ public class ProjectDTO {
         this.thumbnail = thumbnail;
     }
 
-    public File getThumbnailFile() {
+    public MultipartFile getThumbnailFile() {
         return thumbnailFile;
     }
 
-    public void setThumbnailFile(File thumbnailFile) {
+    public void setThumbnailFile(MultipartFile thumbnailFile) {
         this.thumbnailFile = thumbnailFile;
     }
 }

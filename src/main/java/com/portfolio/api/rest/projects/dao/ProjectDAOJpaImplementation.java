@@ -11,25 +11,26 @@ import java.util.List;
 @Repository
 public class ProjectDAOJpaImplementation implements ProjectDAO {
     private EntityManager entityManager;
-    public ProjectDAOJpaImplementation(EntityManager entityManager){
+
+    public ProjectDAOJpaImplementation(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public List<Projects> findAll(){
+    public List<Projects> findAll() {
         TypedQuery<Projects> theQuery = entityManager.createQuery("from Projects", Projects.class);
         List<Projects> projects = theQuery.getResultList();
         return projects;
     }
 
     @Override
-    public Projects findById(int id){
+    public Projects findById(int id) {
         Projects project = entityManager.find(Projects.class, id);
         return project;
     }
 
     @Override
-    public Projects save(ProjectDTO projectDTO){
+    public Projects save(ProjectDTO projectDTO) {
         Projects project = new Projects();
         project.setTitle(projectDTO.getTitle());
         project.setDescription(projectDTO.getDescription());
@@ -37,13 +38,13 @@ public class ProjectDAOJpaImplementation implements ProjectDAO {
         project.setGithubLink(projectDTO.getGithubLink());
         project.setLiveLink(projectDTO.getLiveLink());
         project.setTechUsed(projectDTO.getTechUsed());
-
+        project.setThumbnail(projectDTO.getThumbnail());
         entityManager.persist(project);
         return project;
     }
 
     @Override
-    public Projects update(Projects project, int id){
+    public Projects update(Projects project, int id) {
         Projects existingProject = findById(id);
         existingProject.setTitle(project.getTitle());
         existingProject.setDescription(project.getDescription());
@@ -56,7 +57,7 @@ public class ProjectDAOJpaImplementation implements ProjectDAO {
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
         Projects project = findById(id);
         entityManager.remove(project);
     }

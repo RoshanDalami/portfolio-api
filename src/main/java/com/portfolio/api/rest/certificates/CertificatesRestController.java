@@ -1,6 +1,7 @@
 package com.portfolio.api.rest.certificates;
 
 
+import com.portfolio.api.filestorage.FileStorageService;
 import com.portfolio.api.rest.certificates.dto.CertificateDTO;
 import com.portfolio.api.rest.certificates.entity.Certificate;
 import com.portfolio.api.rest.certificates.service.CertificateService;
@@ -20,11 +21,13 @@ import java.util.List;
 @Tag(name = "Certificates")
 public class CertificatesRestController {
     public CertificateService certificateService;
+    public FileStorageService fileStorageService;
 
     final public Logger logger = LoggerFactory.getLogger(CertificatesRestController.class);
 
-    public CertificatesRestController(CertificateService certificateService){
+    public CertificatesRestController(CertificateService certificateService, FileStorageService fileStorageService){
         this.certificateService = certificateService;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping()
@@ -34,8 +37,12 @@ public class CertificatesRestController {
                 certificates));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<Object>> save(@RequestBody CertificateDTO certificateDTO){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Object>> save(@ModelAttribute CertificateDTO certificateDTO){
+
+        String certificateURL = this.fileStorageService.storeFile(certificateDTO.getCertificateFile(),"certificates");
+        this.logger.info("Certificate URL: {}", certificateURL);
+        certificateDTO.setImageUrl(certificateURL);
         this.certificateService.save(certificateDTO);
        return ResponseEntity.created((null)).body(new ApiResponse<>(HttpStatus.CREATED.value(), "Certificate created " +
                "successfully", null));
