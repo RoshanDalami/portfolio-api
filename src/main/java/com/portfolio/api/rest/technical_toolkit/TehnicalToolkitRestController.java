@@ -4,6 +4,7 @@ import com.portfolio.api.rest.technical_toolkit.dto.TechnicalToolkitDTO;
 import com.portfolio.api.rest.technical_toolkit.entity.TechnicalToolkit;
 import com.portfolio.api.rest.technical_toolkit.service.TechnicalToolkitService;
 import com.portfolio.api.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @Tag(name = "Technical Toolkit", description = "Endpoints for Technical Toolkit Section")
 @RequestMapping("/api/v1/technical-toolkit")
+@SecurityRequirement(name = "jwt-auth")
 public class TehnicalToolkitRestController {
     public TechnicalToolkitService technicalToolkitService;
 

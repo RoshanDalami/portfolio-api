@@ -1,11 +1,13 @@
 package com.portfolio.api.rest.certificates;
 
 
+import com.portfolio.api.decorators.PublicValidator;
 import com.portfolio.api.filestorage.FileStorageService;
 import com.portfolio.api.rest.certificates.dto.CertificateDTO;
 import com.portfolio.api.rest.certificates.entity.Certificate;
 import com.portfolio.api.rest.certificates.service.CertificateService;
 import com.portfolio.api.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/certificate")
 @Tag(name = "Certificates")
+@SecurityRequirement(name = "jwt-auth")
 public class CertificatesRestController {
     public CertificateService certificateService;
     public FileStorageService fileStorageService;
@@ -30,6 +33,7 @@ public class CertificatesRestController {
         this.fileStorageService = fileStorageService;
     }
 
+    @PublicValidator
     @GetMapping()
     public ResponseEntity<ApiResponse<List<Certificate>>> findAll(){
         List<Certificate> certificates = this.certificateService.findAll();
@@ -48,6 +52,7 @@ public class CertificatesRestController {
                "successfully", null));
     }
 
+    @PublicValidator
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Certificate>> findById(@PathVariable int id){
         Certificate certificate = this.certificateService.findById(id);

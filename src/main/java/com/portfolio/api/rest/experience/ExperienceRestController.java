@@ -4,6 +4,7 @@ import com.portfolio.api.rest.experience.dto.ExperienceDTO;
 import com.portfolio.api.rest.experience.entity.Experience;
 import com.portfolio.api.rest.experience.service.ExperienceService;
 import com.portfolio.api.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/experience")
 @Tag(name = "Experience", description = "Endpoints for Experience Section")
+@SecurityRequirement(name = "jwt-auth")
 public class ExperienceRestController {
 
     public ExperienceService experienceService;

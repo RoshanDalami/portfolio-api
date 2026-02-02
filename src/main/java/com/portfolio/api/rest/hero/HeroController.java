@@ -5,6 +5,7 @@ import com.portfolio.api.rest.hero.entity.Hero;
 import com.portfolio.api.rest.hero.service.HeroService;
 import com.portfolio.api.utils.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/hero")
 @Tag(name = "Hero", description = "Endpoints for Hero Section")
+@SecurityRequirement(name = "jwt-auth")
 public class HeroController {
     private ObjectMapper objectMapper;
     public HeroService heroService;

@@ -1,10 +1,12 @@
 package com.portfolio.api.rest.projects;
 
+import com.portfolio.api.decorators.PublicValidator;
 import com.portfolio.api.filestorage.FileStorageService;
 import com.portfolio.api.rest.projects.dto.ProjectDTO;
 import com.portfolio.api.rest.projects.entity.Projects;
 import com.portfolio.api.rest.projects.service.ProjectService;
 import com.portfolio.api.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -21,6 +23,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/v1/projects")
 @Tag(name = "Projects", description = "Endpoints for Projects Section")
+@SecurityRequirement(name = "jwt-auth")
 public class ProjectsRestController {
     private ProjectService projectService;
 private FileStorageService fileStorageService;
@@ -31,6 +34,7 @@ private FileStorageService fileStorageService;
         this.fileStorageService = fileStorageService;
     }
 
+    @PublicValidator()
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<Projects>>> findAll(){
         List<Projects> projects = projectService.findAll();
@@ -58,6 +62,7 @@ private FileStorageService fileStorageService;
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(), "Project deleted successfully", null));
     }
 
+    @PublicValidator
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<Projects>> findById(@PathVariable int id){
         Projects projects = projectService.findById(id);

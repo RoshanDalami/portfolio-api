@@ -5,6 +5,7 @@ import com.portfolio.api.rest.auth.dto.TokenDTO;
 import com.portfolio.api.rest.auth.dto.UserDTO;
 import com.portfolio.api.rest.auth.service.AuthService;
 import com.portfolio.api.utils.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "Auth", description = "Endpoints for Authentication")
 @RequestMapping("/api/v1/auth")
+@SecurityRequirement(name = "jwt-auth")
 public class AuthRestController {
     private AuthService authService;
 
