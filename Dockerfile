@@ -1,8 +1,10 @@
-FROM maven:3.10.3-eclipse-temurin-21 AS builder
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 WORKDIR /workspace
 
 # copy only what we need first to leverage Docker layer cache
 COPY pom.xml .
+RUN mvn -B -q dependency:go-offline
+
 COPY src ./src
 
 # build the application (skip tests to speed up CI builds in Coolify)
