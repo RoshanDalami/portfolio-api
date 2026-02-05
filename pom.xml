@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -113,6 +114,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>portfolio-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
