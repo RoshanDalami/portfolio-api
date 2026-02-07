@@ -7,7 +7,7 @@ services:
       - "8090:8020"
     environment:
       JAVA_OPTS: ${JAVA_OPTS:-}
-      SERVER_PORT: 8000
+      SERVER_PORT: 8020
     restart: unless-stopped
     networks:
       - s-network
