@@ -82,6 +82,7 @@ public class SecurityConfig {
                 "http://localhost:5173",           // Vite default
                 "https://roshandalami.com.np",     // your production domain
                 "https://api.roshandalami.com.np",
+                "http://api.roshandalami.com.np",
                 "*"                                // ← temporary wildcard (remove in prod!)
         ));
 
