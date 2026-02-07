@@ -4,7 +4,7 @@ services:
   app:
     build: .
     ports:
-      - "8090:8000"
+      - "8090:8020"
     environment:
       JAVA_OPTS: ${JAVA_OPTS:-}
       SERVER_PORT: 8000

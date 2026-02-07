@@ -18,8 +18,8 @@ COPY --from=builder /workspace/target/portfolio-api.jar /app/portfolio-api.jar
 
 # allow overriding JVM options and server port
 ENV JAVA_OPTS=""
-ENV SERVER_PORT=8000
+ENV SERVER_PORT=8020
 
-EXPOSE 8000
+EXPOSE 8020
 
 ENTRYPOINT ["sh","-c","java $JAVA_OPTS -jar /app/portfolio-api.jar"]
