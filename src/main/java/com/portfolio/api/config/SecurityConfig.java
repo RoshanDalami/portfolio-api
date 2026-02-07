@@ -22,8 +22,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
-                          JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
@@ -38,30 +37,15 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 // 3. Handle authentication exceptions (401, 403)
-                .exceptionHandling(exception ->
-                        exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                )
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 
                 // 4. Stateless session (JWT)
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // 5. Authorization rules
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()           // important for CORS preflight
+                .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()           // important for CORS preflight
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()              // your current rule
-                        .requestMatchers(
-                                "/api/v1/auth/register",
-                                "/api/v1/auth/login",
-                                "/swagger",
-                                "/swagger/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/actuator/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
+                        .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/swagger", "/swagger/**", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll().anyRequest().authenticated())
 
                 // 6. Add JWT filter before UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -76,26 +60,10 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Allowed origins – change to your actual frontend domains in production
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:3000",           // React/Vite dev
-                "http://localhost:5173",           // Vite default
-                "https://roshandalami.com.np",     // your production domain
-                "https://api.roshandalami.com.np",
-                "http://api.roshandalami.com.np",
-                "*"                                // ← temporary wildcard (remove in prod!)
-        ));
-
-        // Allowed methods
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-
-        // Allowed headers
+        configuration.setAllowedOriginPatterns(List.of("*")); // ✅ FIX
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-
-        // Allow credentials (cookies, Authorization header, etc.)
         configuration.setAllowCredentials(true);
-
-        // Cache preflight (OPTIONS) response for 1 hour
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
